@@ -4,18 +4,16 @@
 
 package frc.robot.commands;
 
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.math.controller.PIDController;
-import frc.robot.Constants.PIDControllerConstants;
+import frc.robot.subsystems.Drivebase;
 
 /** An example command that uses an example subsystem. */
 public class Straight extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   //PIDController m_PIDController = new PIDController(PIDControllerConstants.Kp,PIDControllerConstants.Ki,PIDControllerConstants.Kd);
   private Drivebase m_db;
-  SparkMaxPIDController m_PIDController = new SparkMaxPIDController();
+  private double m_distance;
+  
   
 
   /**
@@ -39,7 +37,7 @@ public class Straight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_db.arcadeDrive(m_db.m_PIDController.calculate(m_db.getAverageDistance(),m_distance),0);
+    m_db.arcadeDrive(m_db.m_PIDController.setReference(stuff,stuff),0);
   }
 
   // Called once the command ends or is interrupted.

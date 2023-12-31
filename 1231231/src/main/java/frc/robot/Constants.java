@@ -22,14 +22,23 @@ public final class Constants {
     public static final int kStallLimit = 40;
     public static final int kFreeLimit = 40;
     public static final int kWheelDiameterInches = 6;
-  
-  }
-
-   public class MotorIDConstants {   
     public static final int kLeftSlave = 1;
     public static final int kLeftMaster = 2;
     public static final int kRightSlave = 3;
     public static final int kRightMaster = 4;
+  
+  }
+
+   public class WristConstants {   
+    public static final int kLeftMotorID = 6;
+    public static final int kRightMotorID = 5;
+    public static final int kStallLimit = 40;
+    public static final int kFreeLimit = 40;
+    public static final double kP = 112312312.4242;
+    public static final double kD = 112312312.4242;
+    public static final double kFF = 112312312.4242;
+    public static final int kCountsPerRev = 8192;
+
   }
 
   public class GearRatioConstants {
