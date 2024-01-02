@@ -165,7 +165,7 @@ public class Wrist extends SubsystemBase {
   public void periodic() {
 
     // This method will be called once per scheduler run
-    Switch(WristState){
+    Switch(state){
       Case OFF:
           OFF();
           break;
