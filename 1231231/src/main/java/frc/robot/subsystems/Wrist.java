@@ -22,6 +22,7 @@ public class Wrist extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
 
+  
 
 
   public enum WristState {
@@ -53,12 +54,18 @@ public class Wrist extends SubsystemBase {
     configMotors();
   }
 
+
+
+  public void OFF(){
+    setJogValue(0);
+  }
+
   public void ZERO(){
       if(m_limitSwitch.get()){
-          jogValue = 0;
+        setJogValue(0);
       }
       else{
-          jogValue = 0.1;
+         setJogValue(0.1);
       }
   }
   
@@ -88,9 +95,16 @@ public class Wrist extends SubsystemBase {
     this.setpoint = setpoint;
   }
 
+
   public void setState(WristState state){
     this.state = state;
   }
+  
+  public void logData(){
+    
+  }
+
+ 
 
 
 
@@ -149,7 +163,22 @@ public class Wrist extends SubsystemBase {
 
   @Override
   public void periodic() {
+
     // This method will be called once per scheduler run
+    Switch(WristState){
+      Case OFF:
+          OFF();
+          break;
+      Case JOG: 
+          setJogValue(jogValue);
+          break;
+      Case POSITION:
+          setPosition(); //not real yet
+          break;
+      Case ZERO:
+          ZERO();
+          break;
+    }
   }
 
   @Override
