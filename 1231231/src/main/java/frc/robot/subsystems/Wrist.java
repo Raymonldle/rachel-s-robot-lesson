@@ -6,6 +6,8 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
@@ -15,7 +17,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.WristConstants;;
+import frc.robot.Constants.WristConstants;
 
 
 public class Wrist extends SubsystemBase {
@@ -47,7 +49,7 @@ public class Wrist extends SubsystemBase {
   public final AbsoluteEncoder m_leftEncoder = m_leftMotor.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle);
   public DigitalInput m_limitSwitch = new DigitalInput(0);
 
-
+SparkMaxPIDController m_PIDController = m_leftMotor.getPIDController();
 
 
   public Wrist() {
@@ -57,16 +59,11 @@ public class Wrist extends SubsystemBase {
 
 
   public void OFF(){
-    setJogValue(0);
+    set(0);
   }
 
   public void ZERO(){
-      if(m_limitSwitch.get()){
-        setJogValue(0);
-      }
-      else{
-         setJogValue(0.1);
-      }
+      this.jogValue = m_limitSwitch.get() ? 0.0 : 0.1;
   }
   
   
@@ -84,6 +81,10 @@ public class Wrist extends SubsystemBase {
   
   public WristState getState(){
     return state;
+  }
+
+  public REVLibError goToSetPoint(){
+     return m_PIDController.setReference(setpoint.getRotations() * WristConstants.kGearRatio, ControlType.kSmartMotion);
   }
 
 
@@ -104,6 +105,10 @@ public class Wrist extends SubsystemBase {
     
   }
 
+  public void set(double value){
+    m_leftMotor.set(value);
+  }
+
  
 
 
@@ -112,29 +117,7 @@ public class Wrist extends SubsystemBase {
    
 
 
-  public void configMotors(){
-      m_leftMotor.follow(m_rightMotor);
-
-      m_leftMotor.setInverted(true);
-      m_rightMotor.setInverted(m_leftMotor.getInverted());
-
-      m_leftMotor.restoreFactoryDefaults();
-      m_rightMotor.restoreFactoryDefaults();
-
-      m_leftMotor.setIdleMode(IdleMode.kBrake);
-      m_rightMotor.setIdleMode(m_leftMotor.getIdleMode());
-
-      m_leftMotor.setSmartCurrentLimit(WristConstants.kStallLimit,WristConstants.kFreeLimit);
-      m_rightMotor.setSmartCurrentLimit(WristConstants.kStallLimit,WristConstants.kFreeLimit);
-
-      SparkMaxPIDController m_PIDController = m_leftMotor.getPIDController();
-      
-      m_PIDController.setP(WristConstants.kP);
-      m_PIDController.setD(WristConstants.kD);
-      m_PIDController.setFF(WristConstants.kFF);
-
-  }
-
+ 
   
 
   /**
@@ -165,17 +148,17 @@ public class Wrist extends SubsystemBase {
   public void periodic() {
 
     // This method will be called once per scheduler run
-    Switch(state){
-      Case OFF:
+    switch (state) {
+      case OFF:
           OFF();
           break;
-      Case JOG: 
-          setJogValue(jogValue);
+      case JOG: 
+          set(jogValue);
           break;
-      Case POSITION:
-          setPosition(); //not real yet
+      case POSITION:
+          goToSetPoint();
           break;
-      Case ZERO:
+      case ZERO:
           ZERO();
           break;
     }
@@ -185,4 +168,29 @@ public class Wrist extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
+
+
+  public void configMotors(){
+    m_leftMotor.follow(m_rightMotor);
+
+    m_leftMotor.setInverted(true);
+    m_rightMotor.setInverted(m_leftMotor.getInverted());
+
+    m_leftMotor.restoreFactoryDefaults();
+    m_rightMotor.restoreFactoryDefaults();
+
+    m_leftMotor.setIdleMode(IdleMode.kBrake);
+    m_rightMotor.setIdleMode(m_leftMotor.getIdleMode());
+
+    m_leftMotor.setSmartCurrentLimit(WristConstants.kStallLimit,WristConstants.kFreeLimit);
+    m_rightMotor.setSmartCurrentLimit(WristConstants.kStallLimit,WristConstants.kFreeLimit);
+
+    
+    
+    m_PIDController.setP(WristConstants.kP);
+    m_PIDController.setD(WristConstants.kD);
+    m_PIDController.setFF(WristConstants.kFF);
+
+}
+
 }

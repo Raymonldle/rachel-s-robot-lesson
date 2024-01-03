@@ -117,7 +117,7 @@ public class Drivebase extends SubsystemBase {
       double circumference = Math.PI * DrivebaseConstants.kWheelDiameterInches; //stores the circumference variable; circumference = 
       double revolutions = (m_leftEncoder.getPosition() / m_leftEncoder.getCountsPerRevolution());
       //distance = circumference * revolutions  (ARC LENGTH)
-      return (circumference * revolutions)/GearRatioConstants.kGearRatio;
+      return (circumference * revolutions)/DrivebaseConstants.kGearRatio;
   }
 
   public double getRightDistance(){

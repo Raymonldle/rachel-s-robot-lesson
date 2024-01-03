@@ -26,6 +26,7 @@ public final class Constants {
     public static final int kLeftMaster = 2;
     public static final int kRightSlave = 3;
     public static final int kRightMaster = 4;
+    public static final int kGearRatio = 4;
   
   }
 
@@ -38,12 +39,11 @@ public final class Constants {
     public static final double kD = 112312312.4242;
     public static final double kFF = 112312312.4242;
     public static final int kCountsPerRev = 8192;
+    public static final int kGearRatio = 232312;
 
   }
 
-  public class GearRatioConstants {
-    public static final int kGearRatio = 4;
-  }
+
 
   public class PIDControllerConstants {
     public static final double Kp = 0;
