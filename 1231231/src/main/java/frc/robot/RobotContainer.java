@@ -29,9 +29,10 @@ import frc.robot.commands.Straight;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Drivebase m_Drivebase = new Drivebase();
+  // private final Drivebase m_Drivebase = new Drivebase();
   XboxController m_XboxController = new XboxController(0);
-  private final Straight m_Straight = new Straight(m_Drivebase, 1);
+  private final StraightCommand m_Straight = new Straight(Drivebase.getInstance(), 1);
+  private SuperStructure m_super = SuperStructure.getInstance();
  
 
 

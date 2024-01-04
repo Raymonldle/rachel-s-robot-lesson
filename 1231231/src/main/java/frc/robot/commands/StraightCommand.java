@@ -8,10 +8,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivebase;
 
 /** An example command that uses an example subsystem. */
-public class Straight extends CommandBase {
+public class StraightCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   //PIDController m_PIDController = new PIDController(PIDControllerConstants.Kp,PIDControllerConstants.Ki,PIDControllerConstants.Kd);
-  private Drivebase m_db;
+  private final Drivebase m_db;
   private double m_distance;
   
   
@@ -21,7 +21,7 @@ public class Straight extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public Straight(Drivebase db, double distance) {
+  public StraightCommand(Drivebase db, double distance) {
     m_distance = distance;
     m_db = db;
     // Use addRequirements() here to declare subsystem dependencies.

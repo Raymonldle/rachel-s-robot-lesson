@@ -22,7 +22,9 @@ import frc.robot.Constants.GearRatioConstants;
 public class Drivebase extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
  
-  public static Drivebase m_instance = new Drivebase();
+  private static Drivebase m_instance = new Drivebase();
+
+  public static Drivebase getInstance() { return m_instance; }
 
   CANSparkMax m_leftSlave = new CANSparkMax(DrivebaseConstants.kLeftSlave, MotorType.kBrushless);  //brushless > brush
   CANSparkMax m_leftMaster = new CANSparkMax(DrivebaseConstants.kLeftMaster, MotorType.kBrushless);
@@ -36,7 +38,7 @@ public class Drivebase extends SubsystemBase {
 
   public SparkMaxPIDController m_PIDController = m_leftMaster.getPIDController();
 
-   public Drivebase() {
+  private Drivebase() {
     configMotors();  //
   }
 

@@ -27,17 +27,17 @@ public class Wrist extends SubsystemBase {
   
 
 
-  public enum WristState {
+  private enum WristState {
     OFF,
     JOG,
     POSITION,
     ZERO
   }
 
-  double jogValue = 0;
-  Rotation2d setpoint = new Rotation2d();
+  private double jogValue = 0;
+  private Rotation2d setpoint;
 
-  WristState state = WristState.OFF;
+  private WristState state = WristState.OFF;
 
 
   
@@ -52,7 +52,7 @@ public class Wrist extends SubsystemBase {
 SparkMaxPIDController m_PIDController = m_leftMotor.getPIDController();
 
 
-  public Wrist() {
+  private Wrist() {
     configMotors();
   }
 
